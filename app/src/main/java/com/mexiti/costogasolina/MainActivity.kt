@@ -15,6 +15,10 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -42,6 +46,16 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CostGasLayout(name: String) {
+    var precioLitro by remember {
+        mutableStateOf("")
+    }
+    var cantLitros by remember {
+        mutableStateOf("")
+    }
+    var propina by remember {
+        mutableStateOf("")
+    }
+
     Column {
         Text(
             text = stringResource(R.string.calcular_monto),
@@ -54,23 +68,43 @@ fun CostGasLayout(name: String) {
                keyboardType = KeyboardType.Number,
                imeAction = ImeAction.Next
            ),
-           value = "10.0",
-           onValueChanged = {}
+           value = precioLitro,
+           onValueChanged = {
+               precioLitro = it
+           }
        )
-        TextField(
-            value = stringResource(R.string.litros),
-            onValueChange = {}
+        EditNumberField(
+            label = R.string.litros,
+            leadingIcon = R.drawable.gasolina,
+            keyboardsOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
+            ),
+            value = cantLitros,
+            onValueChanged = {
+                cantLitros = it
+            }
         )
-        TextField(
-            value = stringResource(R.string.propina) ,
-            onValueChange = {}
+
+        EditNumberField(
+            label = R.string.propina,
+            leadingIcon = R.drawable.propina,
+            keyboardsOptions = KeyboardOptions.Default.copy(
+              keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done
+            ),
+            value = propina,
+            onValueChanged = {
+                propina = it
+            }
         )
+
         Switch(
             checked = false,
             onCheckedChange =  {}
         )
         Text(
-            text = "Total:  $"
+            text = stringResource(R.string.total_string)
         )
 
     }
